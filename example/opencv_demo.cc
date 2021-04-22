@@ -39,6 +39,7 @@ extern "C" {
 #include "tagCustom48h12.h"
 #include "tagStandard41h12.h"
 #include "tagStandard52h13.h"
+#include "tagRobomaster2021.h"
 #include "common/getopt.h"
 }
 
@@ -92,6 +93,8 @@ int main(int argc, char *argv[])
         tf = tagStandard52h13_create();
     } else if (!strcmp(famname, "tagCustom48h12")) {
         tf = tagCustom48h12_create();
+    } else if (!strcmp(famname, "tagRobomaster2021")) {
+        tf = tagRobomaster2021_create();
     } else {
         printf("Unrecognized tag family name. Use e.g. \"tag36h11\".\n");
         exit(-1);
@@ -99,7 +102,11 @@ int main(int argc, char *argv[])
 
 
     apriltag_detector_t *td = apriltag_detector_create();
-    apriltag_detector_add_family(td, tf);
+    if (!strcmp(famname, "tagRobomaster2021")) {
+        apriltag_detector_add_family_bits(td, tf, 0);
+    } else {
+        apriltag_detector_add_family(td, tf);
+    }
     td->quad_decimate = getopt_get_double(getopt, "decimate");
     td->quad_sigma = getopt_get_double(getopt, "blur");
     td->nthreads = getopt_get_int(getopt, "threads");
@@ -174,6 +181,8 @@ int main(int argc, char *argv[])
         tagStandard52h13_destroy(tf);
     } else if (!strcmp(famname, "tagCustom48h12")) {
         tagCustom48h12_destroy(tf);
+    } else if (!strcmp(famname, "tagRobomaster2021")) {
+        tagRobomaster2021_destroy(tf);
     }
 
 
