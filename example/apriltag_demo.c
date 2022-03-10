@@ -47,6 +47,7 @@ either expressed or implied, of the Regents of The University of Michigan.
 #include "tagStandard41h12.h"
 #include "tagStandard52h13.h"
 #include "tagRobomaster2021.h"
+#include "tagRobomaster2022.h"
 
 #include "common/getopt.h"
 #include "common/image_u8.h"
@@ -101,6 +102,8 @@ int main(int argc, char *argv[])
         tf = tagCustom48h12_create();
     } else if (!strcmp(famname, "tagRobomaster2021")) {
         tf = tagRobomaster2021_create();
+   } else if (!strcmp(famname, "tagRobomaster2022")) {
+        tf = tagRobomaster2022_create();
     } else {
         printf("Unrecognized tag family name. Use e.g. \"tag36h11\".\n");
         exit(-1);
@@ -265,6 +268,8 @@ int main(int argc, char *argv[])
         tagCustom48h12_destroy(tf);
     } else if (!strcmp(famname, "tagRobomaster2021")) {
         tagRobomaster2021_destroy(tf);
+    } else if (!strcmp(famname, "tagRobomaster2022")) {
+        tagRobomaster2022_destroy(tf);
     }
 
     getopt_destroy(getopt);
