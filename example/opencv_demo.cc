@@ -41,6 +41,7 @@ extern "C" {
 #include "tagStandard52h13.h"
 #include "tagRobomaster2021.h"
 #include "tagRobomaster2022.h"
+#include "tagRmus2022.h"
 #include "common/getopt.h"
 }
 
@@ -103,6 +104,8 @@ int main(int argc, char *argv[])
         tf = tagRobomaster2021_create();
     } else if (!strcmp(famname, "tagRobomaster2022")) {
         tf = tagRobomaster2022_create();
+    } else if (!strcmp(famname, "tagRmus2022")) {
+        tf = tagRmus2022_create();
     } else {
         printf("Unrecognized tag family name. Use e.g. \"tag36h11\".\n");
         exit(-1);
@@ -110,7 +113,7 @@ int main(int argc, char *argv[])
 
 
     apriltag_detector_t *td = apriltag_detector_create();
-    if (strcmp(famname, "tagRobomaster2021") == 0 || strcmp(famname, "tagRobomaster2022") == 0) {
+    if (strcmp(famname, "tagRobomaster2021") == 0 || strcmp(famname, "tagRobomaster2022") == 0 || strcmp(famname, "tagRmus2022") == 0) {
         apriltag_detector_add_family_bits(td, tf, 0);
     } else {
         apriltag_detector_add_family(td, tf);
@@ -202,6 +205,8 @@ int main(int argc, char *argv[])
         tagRobomaster2021_destroy(tf);
     } else if (!strcmp(famname, "tagRobomaster2022")) {
         tagRobomaster2022_destroy(tf);
+    } else if (!strcmp(famname, "tagRmus2022")) {
+        tagRmus2022_destroy(tf);
     }
 
 
